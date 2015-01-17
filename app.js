@@ -64,6 +64,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     });      
   }
 
+  var window_width = $(window).width;
+
   $('.dropdown-button').dropdown({"hover": false});
   if (window_width > 600) {
     $('ul.tabs').tabs();

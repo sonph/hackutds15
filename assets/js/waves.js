@@ -1,11 +1,11 @@
 
 /*!
  * Waves v0.5.3
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
- * https://github.com/fians/Waves/blob/master/LICENSE 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
  */
 
 ;(function(window) {
@@ -57,15 +57,15 @@
     var Effect = {
 
         // Effect delay
-        duration: 500,
+        duration: 700,
 
         show: function(e) {
-            
+
             // Disable right click
             if (e.button === 2) {
               return false;
             }
-          
+
             var el = this;
 
             // Create ripple
@@ -75,15 +75,14 @@
 
             // Get click coordinate and element witdh
             var pos         = offset(el);
-            var relativeY   = (e.pageY - pos.top) - 10;
-            var relativeX   = (e.pageX - pos.left) - 10;
-            // var scale       = 'scale('+((el.clientWidth / 100) * 2.5)+')';
-            var scale = 'scale(15)';
-          
+            var relativeY   = (e.pageY - pos.top);
+            var relativeX   = (e.pageX - pos.left);
+            var scale       = 'scale('+((el.clientWidth / 100) * 22)+')';
+
             // Support for touch devices
             if ('touches' in e) {
-              relativeY   = (e.touches[0].pageY - pos.top) - 45;
-              relativeX   = (e.touches[0].pageX - pos.left) - 45;
+              relativeY   = (e.touches[0].pageY - pos.top);
+              relativeX   = (e.touches[0].pageX - pos.left);
             }
 
             // Attach data to element
@@ -97,7 +96,7 @@
                 'top': relativeY+'px',
                 'left': relativeX+'px'
             };
-            
+
             ripple.className = ripple.className + ' waves-notransition';
             ripple.setAttribute('style', convertStyle(rippleStyle));
             ripple.className = ripple.className.replace('waves-notransition', '');
@@ -110,21 +109,26 @@
             rippleStyle.transform = scale;
             rippleStyle.opacity   = '1';
 
-            rippleStyle['-webkit-transition-duration'] = Effect.duration + 'ms';
-            rippleStyle['-moz-transition-duration']    = Effect.duration + 'ms';
-            rippleStyle['-o-transition-duration']      = Effect.duration + 'ms';
-            rippleStyle['transition-duration']         = Effect.duration + 'ms';
+            rippleStyle['-webkit-transition-duration'] = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['-moz-transition-duration']    = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['-o-transition-duration']      = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['transition-duration']         = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+
+            rippleStyle['-webkit-transition-timing-function'] = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['-moz-transition-timing-function']    = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['-o-transition-timing-function']      = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
+            rippleStyle['transition-timing-function']         = 'cubic-bezier(0.215, 0.610, 0.355, 1.000)';
 
             ripple.setAttribute('style', convertStyle(rippleStyle));
 
         },
 
         hide: function() {
-            
+
             var el = this;
 
             var width = el.clientWidth * 1.4;
-            
+
             // Get first ripple
             var ripple = null;
 
@@ -145,7 +149,7 @@
             var relativeY   = ripple.getAttribute('data-y');
             var scale       = ripple.getAttribute('data-scale');
 
-            // Get delay beetween mousedown and mouse leave
+            // Get delay between mouse down and mouse leave
             var diff = Date.now() - Number(ripple.getAttribute('data-hold'));
             var delay = 500 - diff;
 
@@ -170,7 +174,7 @@
                     '-moz-transform': scale,
                     '-ms-transform': scale,
                     '-o-transform': scale,
-                    'transform': scale,
+                    'transform': scale
                 };
 
                 ripple.setAttribute('style', convertStyle(style));
@@ -183,7 +187,7 @@
                         return false;
                     }
 
-                    
+
                 }, Effect.duration);
 
             }, delay);
@@ -211,14 +215,13 @@
                     wrapper.className = el.className + ' waves-input-wrapper';
 
                     var elementStyle = el.getAttribute('style');
-                    var dimensionStyle = 'width:'+el.offsetWidth+'px;height:'+el.clientHeight+'px;';
 
                     if (!elementStyle) {
                         elementStyle = '';
                     }
 
-                    wrapper.setAttribute('style', dimensionStyle+elementStyle);
-                    
+                    wrapper.setAttribute('style', elementStyle);
+
                     el.className = 'waves-button-input';
                     el.removeAttribute('style');
 
@@ -227,7 +230,7 @@
                     wrapper.appendChild(el);
 
                 }
-                
+
             }
         }
     };
@@ -239,27 +242,31 @@
         if ('duration' in options) {
             Effect.duration = options.duration;
         }
-        
+
         //Wrap input inside <i> tag
         Effect.wrapInput($$('.waves-effect'));
 
         Array.prototype.forEach.call($$('.waves-effect'), function(i) {
 
         if ('ontouchstart' in window) {
-          i.addEventListener('mouseup', Effect.hide, false);		              i.addEventListener('touchstart', Effect.show, false);
-          i.addEventListener('mouseleave', Effect.hide, false);		              i.addEventListener('touchend',   Effect.hide, false);
+          i.addEventListener('mouseup', Effect.hide, false);                      i.addEventListener('touchstart', Effect.show, false);
+          i.addEventListener('mouseleave', Effect.hide, false);                   i.addEventListener('touchend',   Effect.hide, false);
           i.addEventListener('touchcancel',   Effect.hide, false);
-        } else {
-          i.addEventListener('mousedown', Effect.show, false);
-          i.addEventListener('mouseup', Effect.hide, false);
-          i.addEventListener('mouseleave', Effect.hide, false);
         }
+
+        i.addEventListener('mousedown', Effect.show, false);
+        i.addEventListener('mouseup', Effect.hide, false);
+        i.addEventListener('mouseleave', Effect.hide, false);
+
 
         });
 
     };
 
     window.Waves = Waves;
-    Waves.displayEffect();
+
+    $(document).ready(function() {
+      Waves.displayEffect();
+    });
 
 })(window);

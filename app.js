@@ -87,11 +87,15 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
 
   $(document).ready(function() {
     var editor_left = ace.edit("left");
-    editor_left.setTheme("ace/theme/monokai");
+    editor_left.setTheme("ace/theme/xcode");
     editor_left.getSession().setMode("ace/mode/javascript");
+
     var editor_right = ace.edit("right");
-    editor_right.setTheme("ace/theme/monokai");
+    editor_right.setTheme("ace/theme/xcode");
     editor_right.getSession().setMode("ace/mode/javascript");
+    editor_right.setReadOnly(true);
+    editor_right.renderer.setShowGutter(false); 
+
   });
 }]);
 

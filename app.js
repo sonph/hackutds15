@@ -95,7 +95,10 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_right.getSession().setMode("ace/mode/javascript");
     editor_right.setReadOnly(true);
     editor_right.renderer.setShowGutter(false); 
-
+    editor_right.setHighlightActiveLine(false);
+    editor_right.renderer.$cursorLayer.element.style.opacity = 0;
+    editor_right.textInput.getElement().disabled = true;
+    editor_right.commands.commmandKeyBinding = {};
   });
 }]);
 

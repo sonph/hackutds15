@@ -21,7 +21,7 @@
   left: 0;
 */
   width: 700px;
-  height: 300px;
+  height: 500;
 }
 
 
@@ -31,13 +31,18 @@
   right: 0;
   max-width: 40%;*/
   width: 500px;
-  height: 300px;
+  height: 500px;
   overflow: scroll;
 }
 
 #table {
   margin: 10px 10px;
   width: auto;
+  padding: 0;
   border: 1px solid gray;
+}
+
+#table td {
+  margin: 0;
   padding: 0;
 }

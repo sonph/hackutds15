@@ -11,10 +11,21 @@
 .spacer100 { height: 100px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 
-#editor {
-  position: absolute;
+#left {
+/*  position: absolute;
+  top: 64;
+  left: 0;
+*/
+  width: 600px;
+  height: 300px;
+}
+
+
+#right {
+  /*position: absolute;
   top: 64;
   right: 0;
-  bottom: 0;
-  left: 0;
+  max-width: 40%;*/
+  width: 600px;
+  height: 300px;
 }

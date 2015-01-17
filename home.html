@@ -1,11 +1,20 @@
-<div id="editor">function foo(items) {
+<div id="left">
+// this is left editor
+function foo(items) {
     var x = "All this is syntax highlighted";
     return x;
 }</div>
+
+<div id="right">
+// this is right editor
+</div>
     
 <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/javascript");
+    var editor_left = ace.edit("left");
+    editor_left.setTheme("ace/theme/monokai");
+    editor_left.getSession().setMode("ace/mode/javascript");
+    var editor_right = ace.edit("right");
+    editor_right.setTheme("ace/theme/monokai");
+    editor_right.getSession().setMode("ace/mode/javascript");
 </script>

@@ -137,7 +137,7 @@
 
 
     // Plugin initialization
-    $('.slider').slider({full_width: true});
+    // $('.slider').slider({full_width: true});
     $('.dropdown-button').dropdown({hover: false});
     if (window_width > 600) {
       $('ul.tabs').tabs();
@@ -154,8 +154,8 @@
     $('.materialboxed').materialbox();
     $('.scrollspy').scrollSpy();
     $('.button-collapse').sideNav({'edge': 'left'});
-    $('.datepicker').pickadate();
-    $('select').not('.disabled').material_select();
+    // $('.datepicker').pickadate();
+    // $('select').not('.disabled').material_select();
 
 
   }); // end of document ready

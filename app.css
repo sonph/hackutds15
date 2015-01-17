@@ -11,12 +11,16 @@
 .spacer100 { height: 100px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 
+/** {
+  border: dotted gray;
+}*/
+
 #left {
 /*  position: absolute;
   top: 64;
   left: 0;
 */
-  width: 600px;
+  width: 700px;
   height: 300px;
 }
 
@@ -26,6 +30,14 @@
   top: 64;
   right: 0;
   max-width: 40%;*/
-  width: 600px;
+  width: 500px;
   height: 300px;
+  overflow: scroll;
+}
+
+#table {
+  margin: 10px 10px;
+  width: auto;
+  border: 1px solid gray;
+  padding: 0;
 }

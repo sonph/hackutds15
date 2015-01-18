@@ -182,6 +182,11 @@ var parse = function (output) {
 	// 	console.log("exception");
 	// }
 
+	if(output.exception != null) {
+		// if exception, display exception's name only
+		return output.exception.name;
+	}
+
 	output.arr.forEach(function(e, i, arr) {
 		var line = e.line;
 		var name = e.name;

@@ -13,6 +13,7 @@ var debug = function(left_editor, right_editor) {
  */
 var preprocess = function(editor) {
 	var doc = editor.session.getDocument();
+	var definedVar = [];
 	var new_doc = "";
 	var isBlockComment = false;
 	for (var index = 0; index < doc.getLength(); index++) {
@@ -101,7 +102,7 @@ var preprocess = function(editor) {
 		// e.g. "if (true)"
 		// e.g. "} else {"
 		// e.g. "switch (month) {"
-		if (line.indexOf('if') > -1 || line.indexOf('else') > -1 || line.indexOf('switch') > -1) {
+		if (line.indexOf('if ') > -1 || line.indexOf('else') > -1 || line.indexOf('switch') > -1) {
 			new_doc += line + '\n';
 			continue;
 		}
@@ -113,7 +114,9 @@ var preprocess = function(editor) {
 		if (line.indexOf('=') > -1) {
 			if (line.indexOf('+=') > -1 || line.indexOf('-=') > -1 || line.indexOf('*=') > -1 || line.indexOf('/=') > -1 || line.indexOf('%=') > -1) {
 				vars.push(line.substring(0, line.indexOf('=') - 1).replace('var', '').trim());
+				definedVar.push(line.substring(0, line.indexOf('=') - 1).replace('var', '').trim());
 			} else {
+				definedVar.push(line.split('=')[0].replace('var', '').trim());
 				vars.push(line.split('=')[0].replace('var', '').trim());
 			}
 			hasAssignment = true;
@@ -132,15 +135,16 @@ var preprocess = function(editor) {
 		// function call without assignent -- push variable name
 		// e.g. "list.sort();"
 		if (line.indexOf('.') > -1 && !hasAssignment) {
-			if (vars.indexOf(line.split('.')[0].trim()) > -1) {
+			if (definedVar.indexOf(line.split('.')[0].trim()) > -1) {
 				// user-defined variable
 				vars.push(line.split('.')[0].trim());
 			}
 		}
 
 		// insert log
+		console.log('vars = [' + vars + ']');
 		for (var i = 0; i < vars.length; i++) {
-			line += ';arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
+			line += '; arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: eval(' + vars[i] + ').toString()});';
 		}
 		new_doc += line + '\n';
 	}
@@ -158,7 +162,6 @@ var evaluate = function(doc) {
 		eval(doc);
 		return {arr: arr, exception: null};
 	} catch(e) {
-		console.log(e);
 		return {arr: arr, exception: e};
 	}
 }
@@ -168,7 +171,7 @@ var evaluate = function(doc) {
  * @string doc	output document of the eval function
  */
 var parse = function (output) {
-	// return JSON.stringify(output, undefined, 2);
+	// return JSON.stringify(output.arr, undefined, 2);
 	// console.log(JSON.stringify(output, undefined, 2));
 
 	hash = {};

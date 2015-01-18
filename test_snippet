@@ -6,8 +6,6 @@ c = a + b;
 c ++;
 c -= ((a % b) * a / b) + 12;
 
----------------------------------------
-
 // find sum of a list
 var l = [22, 3, 5, 10, 12];
 var s = 0;
@@ -29,13 +27,9 @@ do {
 	index ++;	
 } while (index < l.length);
 
----------------------------------------
-
 // function call
-var l = 'hello world';
-l.slice(2, 6);
-
----------------------------------------
+var st = 'hello world';
+st.slice(2, 6); // this doesn't change st
 
 // list methods
 var fruits = ["Banana", "Orange", "Apple", "Mango", "Pine Apple"];

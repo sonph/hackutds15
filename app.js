@@ -102,7 +102,20 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_right.commands.commmandKeyBinding = {};
     editor_right.setFontSize(14);
 
+    $scope.running = false;
+
     // $('#right').hide();
+    $('#preloader').hide();
+    
+    $('#refreshbtn').on('click', function() {
+      $scope.running = true;
+      $('#refreshbtn').addClass('disabled');
+      $('#right').fadeOut('fast');
+      $('#right').hide();
+      $('#preloader_td').addClass("center");
+      $('#preloader').fadeIn('fast');
+      // call function
+    });
   });
 }]);
 

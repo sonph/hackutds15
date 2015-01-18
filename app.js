@@ -110,7 +110,9 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 1000;
     $scope.animationDuration = 300;
-    $scope.domain = 'http://sonpham.me/hackutds15/#/';
+    $scope.domain = 'http://localhost:8000/#/';
+    $scope.defaultContent = '//hello \
+    ';
 
     // get Parse data
     Parse.initialize("uY92Wyjl4MhYl4i9wBptpFIDqYSAh4A9wjSRLe29", "4D0HZli6Yw7u4gEdpV1XHpBoWhPWEiQVmzZ23gWV");
@@ -143,14 +145,18 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     };
 
     var parseLoad = function(id) {
+      console.log("LOADDING", id);
       var CodeObject = Parse.Object.extend("CodeObject");
       var query = new Parse.Query(CodeObject);
       query.get(id, {
         success: function(obj) {
-          editor_left.setValue(obj.content);
+          toast('Loaded');
+          console.log('LOADED CONTENT', obj.attributes.content);
+          editor_left.setValue(obj.attributes.content);
         },
         error: function(obj, error) {
           toast('Failed to load: ' + error.message, 5000); 
+          editor_left.setValue($scope.defaultContent);
         }
       });
     };
@@ -189,6 +195,10 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
         $scope.contentid = path;
       }
       load($scope.contentid);
+    } else {
+      editor_left.setValue($scope.defaultContent);
+      editor_left.selection.clearSelection();
+      editor_left.gotoLine(0, 0, false);
     }
 
     // preloader animation

@@ -108,7 +108,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.running = false;
     $scope.lastRefresh = new Date().getTime();
     $scope.firstTime = true; // first time on page load?
-    $scope.refreshInterval = 1000;
+    $scope.refreshInterval = 2000;
     $scope.animationDuration = 300;
     $scope.domain = 'http://localhost:8000/#/';
     $scope.defaultContent = '//hello \
@@ -240,7 +240,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
 
     // refresh button and refresh on change
     $('#refreshbtn').on('click', refresh);
-    editor_left.on('change', refresh);
+    editor_left.on('change', interval);
 
     // auto refresh checkbox
     $('#autorefresh').click(function() {

@@ -110,7 +110,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 2000;
     $scope.animationDuration = 300;
-    $scope.domain = 'http://localhost:8000/#/';
+    $scope.domain = 'http://sonpham.me/hackutds15/#/';
     $scope.defaultContent = '//hello \
     ';
 

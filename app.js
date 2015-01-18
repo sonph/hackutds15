@@ -111,7 +111,44 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.refreshInterval = 2000;
     $scope.animationDuration = 300;
     $scope.domain = 'http://sonpham.me/hackutds15/#/';
-    $scope.defaultContent = '//hello \
+    $scope.defaultContent = '// basic algebra\n\
+var a = 2;\n\
+var b = 4;\n\
+var c = a * b;\n\
+c = a + b;\n\
+c ++;\n\
+c -= ((a % b) * a / b) + 12;\n\
+\n\
+// find sum of a list\n\
+var l = [22, 3, 5, 10, 12];\n\
+var s = 0;\n\
+for (var index = 0; index < l.length; index++) {\n\
+  s = s + l[index];\n\
+}\n\
+s = 0;\n\
+\n\
+index = -1;\n\
+do {\n\
+  index ++;\n\
+  s += l[index];\n\
+} while (index < l.length);\n\
+\n\
+s = 0;\n\
+index = 0;\n\
+do {\n\
+  s += l[index];\n\
+  index ++; \n\
+} while (index < l.length);\n\
+\n\
+// function call\n\
+var st = "hello world";\n\
+st.slice(2, 6); // this doesn\'t change st\n\
+\n\
+// list methods\n\
+var fruits = ["Banana", "Orange", "Apple", "Mango", "Pine Apple"];\n\
+fruits.shift();\n\
+fruits.sort();\n\
+\n\
     ';
 
     // get Parse data

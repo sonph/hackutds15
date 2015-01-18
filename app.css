@@ -55,9 +55,9 @@
   margin-bottom: 0;
 }
 
-#autorefresh-div {
+#autorefresh-p {
   margin-bottom: 0;
-  /*gposition: relative;*/
-  /*top: 50%;*/
-  /*transform: translateY(-50%);*/
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }

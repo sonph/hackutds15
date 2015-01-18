@@ -248,7 +248,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
       var id = $(this).prop('id');
       console.log(id);
       if (id == 'fancy') {
-        $scope.animationDuration = 1500;
+        $scope.animationDuration = 50000;
       } else {
         $scope.animationDuration = 0;
       }

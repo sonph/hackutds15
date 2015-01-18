@@ -12,7 +12,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'AboutCtrl'
   })
   .otherwise({
-    redirectTo: '/'
+    templateUrl: 'home.html',
+    controller: 'HomeCtrl'
   });
   // $locationProvider.html5Mode(true);
 }]);
@@ -38,7 +39,7 @@ app.run(function($rootScope) {
   });
 });
 
-app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
   $rootScope.root = {
     title: 'Home'
   };
@@ -141,14 +142,52 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       });
     };
 
-    var parseLoad = function() {
+    var parseLoad = function(id) {
       var CodeObject = Parse.Object.extend("CodeObject");
+      var query = new Parse.Query(CodeObject);
+      query.get(id, {
+        success: function(obj) {
+          editor_left.setValue(obj.content);
+        },
+        error: function(obj, error) {
+          toast('Failed to load: ' + error.message, 5000); 
+        }
+      });
     };
 
     $('#savebtn').click(function() {
       console.log('#savebtn clicked');
       parseSave();
     });
+
+    console.log("PATH:", $location.path());
+    var path = $location.path();
+    if (path.charAt(1) == '/') {
+      $scope.contentid = path.substr(1);
+    } else {
+      $scope.contentid = path;
+    }
+
+    var load = function(id) {
+      $scope.running = true;
+      $('#refreshbtn').addClass('disabled');
+      $('#right').fadeOut('fast');
+      $('#right').hide();
+      $('#preloader_td').addClass("center");
+      $('#preloader').fadeIn('fast');
+
+      // call function
+      setTimeout(function() {
+        parseLoad(id);
+        $('#preloader').fadeOut('fast');
+        $('#preloader').hide();
+        $('#preloader_td').removeClass("center");
+        $('#right').fadeIn('fast');
+        $('#refreshbtn').removeClass('disabled');
+        $scope.running = false;
+      }, $scope.animationDuration);
+    };
+    load($scope.contentid);
 
     // preloader animation
     // $('#right').hide();

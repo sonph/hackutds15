@@ -160,14 +160,6 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
       parseSave();
     });
 
-    console.log("PATH:", $location.path());
-    var path = $location.path();
-    if (path.charAt(1) == '/') {
-      $scope.contentid = path.substr(1);
-    } else {
-      $scope.contentid = path;
-    }
-
     var load = function(id) {
       $scope.running = true;
       $('#refreshbtn').addClass('disabled');
@@ -187,7 +179,17 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
         $scope.running = false;
       }, $scope.animationDuration);
     };
-    load($scope.contentid);
+
+    console.log("PATH:", $location.path());
+    var path = $location.path().trim();
+    if (path != '/') {
+      if (path.charAt(0) == '/') {
+        $scope.contentid = path.substr(1);
+      } else {
+        $scope.contentid = path;
+      }
+      load($scope.contentid);
+    }
 
     // preloader animation
     // $('#right').hide();

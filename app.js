@@ -153,10 +153,14 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
           toast('Loaded');
           console.log('LOADED CONTENT', obj.attributes.content);
           editor_left.setValue(obj.attributes.content);
+          editor_left.selection.clearSelection();
+          editor_left.gotoLine(0, 0, false);
         },
         error: function(obj, error) {
           toast('Failed to load: ' + error.message, 5000); 
           editor_left.setValue($scope.defaultContent);
+          editor_left.selection.clearSelection();
+          editor_left.gotoLine(0, 0, false);
         }
       });
     };
@@ -205,6 +209,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     // $('#right').hide();
     $('#preloader').hide();
 
+    // set refresh rate to max one refresh per $scope.refreshInterval
     var interval = function() {
       var now = new Date().getTime();
       if (((now - $scope.lastRefresh) < $scope.refreshInterval) && !$scope.firstTime) {
@@ -215,7 +220,42 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
 
       $scope.lastRefresh = now;
       refresh();
-    }
+    };
+
+
+    // wait for user to finish typing
+    var timer = 0;
+    var onKeydown = function(e) {
+      $scope.running = true;
+      $('#refreshbtn').addClass('disabled');
+      $('#right').fadeOut('fast');
+      $('#right').hide();
+      $('#preloader_td').addClass("center");
+      $('#preloader').fadeIn('fast');
+    };
+    $('#left').on('keydown', onKeydown);
+    var onKeyup =  function(e){
+      if ($scope.firstTime) {
+        refresh();
+        $scope.firstTime = false;
+      } else {
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+          debug(editor_left, editor_right);
+          $('#preloader').fadeOut('fast');
+          $('#preloader').hide();
+          $('#preloader_td').removeClass("center");
+          $('#right').fadeIn('fast');
+          $('#refreshbtn').removeClass('disabled');
+          $scope.running = false;
+        }, 500); 
+      }
+    };
+    $('#left').on('keyup', onKeyup);
+
+
 
     // refresh function and animation
     var refresh = function() {
@@ -240,7 +280,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
 
     // refresh button and refresh on change
     $('#refreshbtn').on('click', refresh);
-    editor_left.on('change', interval);
+    // editor_left.on('change', interval);
 
     // auto refresh checkbox
     $('#autorefresh').click(function() {

@@ -89,8 +89,8 @@ var preprocess = function(editor) {
  * @string doc 	preprocessed document with logs
  */
 var evaluate = function(doc) {
-	// doc = '(function() {arr=[];' + doc + 'return arr;})();'
-	console.log('doc_to_eval = ' + doc);
+	doc = '(function() {arr=[];' + doc + 'return arr;})();'
+	// console.log('doc_to_eval = ' + doc);
 	return eval(doc);
 }
 

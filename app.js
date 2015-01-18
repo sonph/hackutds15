@@ -108,13 +108,15 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     $scope.lastRefresh = new Date().getTime();
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 1000;
+    $scope.animationDuration = 300;
 
+    // preloader animation
     // $('#right').hide();
     $('#preloader').hide();
 
     var interval = function() {
       var now = new Date().getTime();
-      if (now - $scope.lastRefresh < $scope.refreshInterval && !$scope.firstTime) {
+      if (((now - $scope.lastRefresh) < $scope.refreshInterval) && !$scope.firstTime) {
         setTimeout(refresh, $scope.refreshInterval - (now - $scope.lastRefresh));
       }
 
@@ -124,6 +126,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       refresh();
     }
 
+    // refresh function and animation
     var refresh = function() {
       $scope.running = true;
       $('#refreshbtn').addClass('disabled');
@@ -141,12 +144,14 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
         $('#right').fadeIn('fast');
         $('#refreshbtn').removeClass('disabled');
         $scope.running = false;
-      }, 300);
+      }, $scope.animationDuration);
     };
 
+    // refresh button and refresh on change
     $('#refreshbtn').on('click', refresh);
     editor_left.on('change', refresh);
 
+    // auto refresh checkbox
     $('#autorefresh').click(function() {
       if ($(this).is(':checked')) {
         // $scope.autorefresh = true;
@@ -156,6 +161,18 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
         editor_left.removeListener('change', refresh);
       }
     });
+
+    // radio buttons
+    $('input[name=group1]').on('click', function() {
+      var id = $(this).prop('id');
+      console.log(id);
+      if (id == 'fancy') {
+        $scope.animationDuration = 1500;
+      } else {
+        $scope.animationDuration = 0;
+      }
+    });
+
     refresh(); // first time on page load
   });
 }]);

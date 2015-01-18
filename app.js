@@ -90,8 +90,6 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_left.setTheme("ace/theme/xcode");
     editor_left.getSession().setMode("ace/mode/javascript");
     editor_left.setFontSize(14);
-    // console.log(preprocess(editor_left));
-    console.log(evaluate(preprocess(editor_left)));
 
     var editor_right = ace.edit("right");
     editor_right.setTheme("ace/theme/xcode");
@@ -116,7 +114,9 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       $('#right').hide();
       $('#preloader_td').addClass("center");
       $('#preloader').fadeIn('fast');
+
       // call function
+      debug(editor_left, editor_right);
     });
   });
 }]);

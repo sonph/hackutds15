@@ -81,7 +81,7 @@ var preprocess = function(editor) {
 		// insert log
 		for (var i = 0; i < vars.length; i++) {
 			if (vars[i] == undefined) {
-				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: undefined});';
+				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: null});';
 			} else {
 				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
 			}
@@ -112,7 +112,7 @@ var evaluate = function(doc) {
 	try {
 		arr = [];
 		eval(doc);
-		return {arr: arr, exception: undefined};
+		return {arr: arr, exception: null};
 	} catch(e) {
 		return {arr: arr, exception: e};
 	}
@@ -128,11 +128,11 @@ var parse = function (output) {
 
 	hash = {};
 
-	if (output.exception !== undefined) {
-		return JSON.stringify(output.arr);
-		output.arr.forEach(function(e, ind, arr) {
-			console.log(e.name);
-		});
+	if (output.exception === null) {
+		console.log("executed");
+	} else {
+		console.log("exception");
 	}
 
+	return JSON.stringify(output, undefined, 2);
 }

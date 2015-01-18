@@ -90,6 +90,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_left.setTheme("ace/theme/xcode");
     editor_left.getSession().setMode("ace/mode/javascript");
     editor_left.setFontSize(14);
+    editor_left.$blockScrolling = Infinity;
 
     var editor_right = ace.edit("right");
     editor_right.setTheme("ace/theme/xcode");
@@ -101,13 +102,29 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_right.textInput.getElement().disabled = true;
     editor_right.commands.commmandKeyBinding = {};
     editor_right.setFontSize(14);
+    editor_right.$blockScrolling = Infinity;
 
     $scope.running = false;
+    $scope.lastRefresh = new Date().getTime();
+    $scope.firstTime = true; // first time on page load?
+    $scope.refreshInterval = 1000;
 
     // $('#right').hide();
     $('#preloader').hide();
 
-    var refreshOnClick = function() {
+    var interval = function() {
+      var now = new Date().getTime();
+      if (now - $scope.lastRefresh < $scope.refreshInterval && !$scope.firstTime) {
+        setTimeout(refresh, $scope.refreshInterval - (now - $scope.lastRefresh));
+      }
+
+      $scope.firstTime = false;
+
+      $scope.lastRefresh = now;
+      refresh();
+    }
+
+    var refresh = function() {
       $scope.running = true;
       $('#refreshbtn').addClass('disabled');
       $('#right').fadeOut('fast');
@@ -127,9 +144,10 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       }, 300);
     };
 
-    $('#refreshbtn').on('click', refreshOnClick);
+    $('#refreshbtn').on('click', refresh);
+    editor_left.on('change', refresh);
 
-    refreshOnClick();
+    refresh(); // first time on page load
   });
 }]);
 

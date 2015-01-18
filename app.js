@@ -101,6 +101,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_right.textInput.getElement().disabled = true;
     editor_right.commands.commmandKeyBinding = {};
     editor_right.setFontSize(14);
+
+    // $('#right').hide();
   });
 }]);
 

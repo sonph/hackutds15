@@ -47,7 +47,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
   // Github Latest Commit
   if ($('#lastUpdated').length) { // Checks if widget div exists (Index only)
     $.ajax({
-      url: "https://api.github.com/repos/sonph/sonph.github.io/commits/master",
+      url: "https://api.github.com/repos/sonph/hackutds15/commits/master",
       dataType: "json", 
       success: function (data) {
         var sha = data.sha;

@@ -39,10 +39,10 @@
   margin: 10px 10px;
   width: auto;
   padding: 0;
-  border: 1px solid gray;
 }
 
 #table td {
   margin: 0;
   padding: 0;
+  border: 1px solid gray;
 }

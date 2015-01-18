@@ -89,6 +89,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     var editor_left = ace.edit("left");
     editor_left.setTheme("ace/theme/xcode");
     editor_left.getSession().setMode("ace/mode/javascript");
+    editor_left.setFontSize(14);
 
     var editor_right = ace.edit("right");
     editor_right.setTheme("ace/theme/xcode");
@@ -99,6 +100,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_right.renderer.$cursorLayer.element.style.opacity = 0;
     editor_right.textInput.getElement().disabled = true;
     editor_right.commands.commmandKeyBinding = {};
+    editor_right.setFontSize(14);
   });
 }]);
 

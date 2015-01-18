@@ -116,8 +116,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       $('#preloader').fadeIn('fast');
 
       // call function
-      // setTimeout(callback, 5000);
-      callback();
+      setTimeout(callback, 300);
+      // callback();
     });
 
     var callback = function() {

@@ -111,6 +111,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.refreshInterval = 2000;
     $scope.animationDuration = 300;
     $scope.domain = 'http://sonpham.me/hackutds15/#/';
+    $scope.autorefresh = true;
     $scope.defaultContent = '// basic algebra\n\
 var a = 2;\n\
 var b = 4;\n\
@@ -263,12 +264,14 @@ fruits.sort();\n\
     // wait for user to finish typing
     var timer = 0;
     var onKeydown = function(e) {
-      $scope.running = true;
-      $('#refreshbtn').addClass('disabled');
-      $('#right').fadeOut('fast');
-      $('#right').hide();
-      $('#preloader_td').addClass("center");
-      $('#preloader').fadeIn('fast');
+      if($scope.autorefresh) {
+        $scope.running = true;
+        $('#refreshbtn').addClass('disabled');
+        $('#right').fadeOut('fast');
+        $('#right').hide();
+        $('#preloader_td').addClass("center");
+        $('#preloader').fadeIn('fast');
+      }
     };
     $('#left').on('keydown', onKeydown);
     var onKeyup =  function(e){
@@ -276,18 +279,22 @@ fruits.sort();\n\
         refresh();
         $scope.firstTime = false;
       } else {
-        if (timer) {
+        if($scope.autorefresh) {
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(function() {
+            debug(editor_left, editor_right);
+            $('#preloader').fadeOut('fast');
+            $('#preloader').hide();
+            $('#preloader_td').removeClass("center");
+            $('#right').fadeIn('fast');
+            $('#refreshbtn').removeClass('disabled');
+            $scope.running = false;
+          }, 500);
+        } else {
           clearTimeout(timer);
         }
-        timer = setTimeout(function() {
-          debug(editor_left, editor_right);
-          $('#preloader').fadeOut('fast');
-          $('#preloader').hide();
-          $('#preloader_td').removeClass("center");
-          $('#right').fadeIn('fast');
-          $('#refreshbtn').removeClass('disabled');
-          $scope.running = false;
-        }, 500); 
       }
     };
     $('#left').on('keyup', onKeyup);
@@ -322,10 +329,10 @@ fruits.sort();\n\
     // auto refresh checkbox
     $('#autorefresh').click(function() {
       if ($(this).is(':checked')) {
-        // $scope.autorefresh = true;
+        $scope.autorefresh = true;
         editor_left.on('change', refresh);
       } else {
-        // $scope.autorefresh = false;
+        $scope.autorefresh = false;
         editor_left.removeListener('change', refresh);
       }
     });

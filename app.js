@@ -113,9 +113,11 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope
     $scope.domain = 'http://sonpham.me/hackutds15/#/';
     $scope.autorefresh = true;
     $scope.defaultContent = '// basic algebra\n\
+// try setting a to an arbitrary value and see the values updated in realtime\n\
 var a = 2;\n\
 var b = 4;\n\
 var c = a * b;\n\
+// you can see how variables values change as the program runs, from top to bottom\n\
 c = a + b;\n\
 c ++;\n\
 c -= ((a % b) * a / b) + 12;\n\

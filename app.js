@@ -106,8 +106,8 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
 
     // $('#right').hide();
     $('#preloader').hide();
-    
-    $('#refreshbtn').on('click', function() {
+
+    var refreshOnClick = function() {
       $scope.running = true;
       $('#refreshbtn').addClass('disabled');
       $('#right').fadeOut('fast');
@@ -116,20 +116,20 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       $('#preloader').fadeIn('fast');
 
       // call function
-      setTimeout(callback, 300);
-      // callback();
-    });
-
-    var callback = function() {
-      debug(editor_left, editor_right);
-      $('#preloader').fadeOut('fast');
-      $('#preloader').hide();
-      $('#preloader_td').removeClass("center");
-      $('#right').fadeIn('fast');
-      $('#refreshbtn').removeClass('disabled');
-      $scope.running = false;
-
+      setTimeout(function() {
+        debug(editor_left, editor_right);
+        $('#preloader').fadeOut('fast');
+        $('#preloader').hide();
+        $('#preloader_td').removeClass("center");
+        $('#right').fadeIn('fast');
+        $('#refreshbtn').removeClass('disabled');
+        $scope.running = false;
+      }, 300);
     };
+
+    $('#refreshbtn').on('click', refreshOnClick);
+
+    refreshOnClick();
   });
 }]);
 

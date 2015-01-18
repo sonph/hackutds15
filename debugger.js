@@ -85,7 +85,7 @@ var preprocess = function(editor) {
 			} else {
 				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
 			}
-			console.log(line);
+			// console.log(line);
 		}
 		new_doc += line + '\n';
 	}
@@ -123,7 +123,16 @@ var evaluate = function(doc) {
  * @string doc	output document of the eval function
  */
 var parse = function (output) {
-	return JSON.stringify(output, undefined, 2);
-	console.log(JSON.stringify(output, undefined, 2));
+	// return JSON.stringify(output, undefined, 2);
+	// console.log(JSON.stringify(output, undefined, 2));
+
+	hash = {};
+
+	if (output.exception !== undefined) {
+		return JSON.stringify(output.arr);
+		output.arr.forEach(function(e, ind, arr) {
+			console.log(e.name);
+		});
+	}
 
 }

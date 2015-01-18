@@ -116,8 +116,20 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       $('#preloader').fadeIn('fast');
 
       // call function
-      debug(editor_left, editor_right);
+      // setTimeout(callback, 5000);
+      callback();
     });
+
+    var callback = function() {
+      debug(editor_left, editor_right);
+      $('#preloader').fadeOut('fast');
+      $('#preloader').hide();
+      $('#preloader_td').removeClass("center");
+      $('#right').fadeIn('fast');
+      $('#refreshbtn').removeClass('disabled');
+      $scope.running = false;
+
+    };
   });
 }]);
 

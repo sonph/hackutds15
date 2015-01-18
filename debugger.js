@@ -173,11 +173,38 @@ var parse = function (output) {
 
 	hash = {};
 
-	if (output.exception === null) {
-		console.log("executed");
-	} else {
-		console.log("exception");
+	// if (output.exception === null) {
+	// 	console.log("executed");
+	// } else {
+	// 	console.log("exception");
+	// }
+
+	output.arr.forEach(function(e, i, arr) {
+		var line = e.line;
+		var name = e.name;
+		var value = e.value;
+		if (line in hash) {
+			hash[line] += (' ' + value);
+		} else {
+			hash[line] = name + ' = ' + value;
+		}
+	});
+
+
+	var lines_no = R.max(R.keys(hash));
+	console.log(lines_no);
+
+	lines = [];
+
+	for(var i = 1; i <= lines_no; i++) {
+		if (i in hash) {
+			lines.push(hash[i]);
+		} else {
+			lines.push('');
+		}
 	}
 
-	return JSON.stringify(output, undefined, 2);
+	return R.join('\n', lines);
+
+	// return JSON.stringify(output, undefined, 2);
 }

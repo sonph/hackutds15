@@ -43,7 +43,7 @@ var preprocess = function(editor) {
 
 		// return statement -- eval return value and push to arr
 		if (line.indexOf('return') > -1) {
-			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: eval(' + line.replace('return', '').split(';')[0].trim() +')});';
+			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: JSON.stringify(eval(' + line.replace('return', '').split(';')[0].trim() +'"))});';
 			if (line.indexOf('++') > -1) {
 				tmp += line.replace('return', '').split(';')[0].trim().replace('++', '').trim() + '--;';
 			}
@@ -75,7 +75,7 @@ var preprocess = function(editor) {
 			}
 
 			if (iter != null && iter.length > 0) {
-				line += 'arr.push({line: ' + (index +  1) + ', name: "' + iter + '", value: eval("' + iter + '").toString()});';
+				line += 'arr.push({line: ' + (index +  1) + ', name: "' + iter + '", value: JSON.stringify(eval("' + iter + '"))});';
 			}
 			new_doc += line + '\n';
 			continue;
@@ -144,7 +144,7 @@ var preprocess = function(editor) {
 		// insert log
 		console.log('vars = [' + vars + ']');
 		for (var i = 0; i < vars.length; i++) {
-			line += '; arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: eval("' + vars[i] + '").toString()});';
+			line += '; arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: JSON.stringify(eval("' + vars[i] + '"))});';
 		}
 		new_doc += line + '\n';
 	}

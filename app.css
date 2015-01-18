@@ -61,3 +61,7 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+#intro p {
+  font-size: 1.2em;
+}

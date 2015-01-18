@@ -5,6 +5,7 @@
  */
 var preprocess = function(editor) {
 	var doc = editor.session.getDocument();
+	var new_doc = "";
 	var isBlockCommet = false;
 	for (var index = 0; index < doc.getLength(); index++) {
 		var line = doc.getLine(index).trim();
@@ -18,6 +19,7 @@ var preprocess = function(editor) {
 			if (line.indexOf('*/') > -1) {
 				isBlockCommet = false;
 			}
+			new_doc += line + '\n';
 			continue;
 		}
 		// isBlockComment == false
@@ -25,10 +27,12 @@ var preprocess = function(editor) {
 			if (line.indexOf('*/') == -1) {
 				isBlockCommet = true;
 			}
+			// else: block comment ends on the same line
+			new_doc += line + '\n';
 			continue;
 		}
 
-		// line comment
+		// line comment -- eliminate comment
 		// e.g. "var a = b; // assignment"
 		if (line.indexOf('//') > -1) {
 			line = line.substring(0, line.indexOf('//'));
@@ -47,6 +51,7 @@ var preprocess = function(editor) {
 		// e.g. "} else {"
 		// e.g. "switch (month) {"
 		if (line.indexOf('if') > -1 || line.indexOf('else') > -1 || line.indexOf('switch') > -1) {
+			new_doc += line + '\n';
 			continue;
 		}
 
@@ -58,7 +63,7 @@ var preprocess = function(editor) {
 
 		// function definition -- push arguments
 		// e.g. "var func = function(<args>) {"
-		if (line.index('function') > -1) {
+		if (line.indexOf('function') > -1) {
 			var args = line.split('(')[1].split(')')[0].split(',');
 			for (var i = 0; i < args.length; i++) {
 				vars.push(args[i].trim());
@@ -67,9 +72,16 @@ var preprocess = function(editor) {
 
 		// insert log
 		for (var i = 0; i < vars.length; i++) {
-			line += 'arr.push({' + index + ', "' + vars[i] + '", ' + vars[i] + '});';
+			if (vars[i] == undefined) {
+				line += 'arr.push({line: ' + index + ', name: "' + vars[i] + '", value: undefined});';
+			} else {
+				line += 'arr.push({line: ' + index + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
+			}
+			console.log(line);
 		}
+		new_doc += line + '\n';
 	}
+	return new_doc;
 }
 
 /* 
@@ -77,7 +89,8 @@ var preprocess = function(editor) {
  * @string doc 	preprocessed document with logs
  */
 var evaluate = function(doc) {
-	doc = '(function() {arr=[];' + doc + 'return arr;})();'
+	// doc = '(function() {arr=[];' + doc + 'return arr;})();'
+	console.log('doc_to_eval = ' + doc);
 	return eval(doc);
 }
 

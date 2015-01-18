@@ -91,7 +91,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     editor_left.getSession().setMode("ace/mode/javascript");
     editor_left.setFontSize(14);
     // console.log(preprocess(editor_left));
-    console.log(evaluate(preprocess(editor_left)));
+    console.log(JSON.stringify(evaluate(preprocess(editor_left))));
 
     var editor_right = ace.edit("right");
     editor_right.setTheme("ace/theme/xcode");

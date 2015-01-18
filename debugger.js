@@ -1,4 +1,11 @@
 
+var debug = function(left_editor, right_editor) {
+	var doc = preprocess(left_editor);
+	var output = evaluate(doc);
+	doc = parse(output);
+	right_editor.setValue(doc);
+	return;
+}
 /* 
  * Preprocess user code by finding variables in each line 
  * and log var values
@@ -98,7 +105,7 @@ var evaluate = function(doc) {
  * Parse evaluation output into a string 
  * @string doc	output document of the eval function
  */
-var parse = function (doc) {
+var parse = function () {
 	var doc = "";
 
 }

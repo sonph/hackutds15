@@ -2,8 +2,9 @@
 var debug = function(left_editor, right_editor) {
 	var doc = preprocess(left_editor);
 	var output = evaluate(doc);
-	doc = parse(output);
-	right_editor.setValue(doc);
+	var content = parse(output);
+	right_editor.setValue(content);
+	right_editor.selection.clearSelection();
 	return;
 }
 /* 
@@ -80,9 +81,9 @@ var preprocess = function(editor) {
 		// insert log
 		for (var i = 0; i < vars.length; i++) {
 			if (vars[i] == undefined) {
-				line += 'arr.push({line: ' + index + ', name: "' + vars[i] + '", value: undefined});';
+				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: undefined});';
 			} else {
-				line += 'arr.push({line: ' + index + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
+				line += 'arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: ' + vars[i] + '});';
 			}
 			console.log(line);
 		}
@@ -96,16 +97,33 @@ var preprocess = function(editor) {
  * @string doc 	preprocessed document with logs
  */
 var evaluate = function(doc) {
-	doc = '(function() {arr=[];' + doc + 'return arr;})();'
+	// doc = '( \
+	// 		function() { \
+	// 			try { \
+	// 				arr = []; ' +
+	// 				doc + 
+	// 				'return {arr: arr, exception: undefined}; \
+	// 			} catch (e) { \
+	// 				return {arr: arr, exception: e}; \
+	// 			} \
+	// 		} \
+	// 	)();';
 	// console.log('doc_to_eval = ' + doc);
-	return eval(doc);
+	try {
+		arr = [];
+		eval(doc);
+		return {arr: arr, exception: undefined};
+	} catch(e) {
+		return {arr: arr, exception: e};
+	}
 }
 
 /* 
  * Parse evaluation output into a string 
  * @string doc	output document of the eval function
  */
-var parse = function () {
-	var doc = "";
+var parse = function (output) {
+	return JSON.stringify(output, undefined, 2);
+	console.log(JSON.stringify(output, undefined, 2));
 
 }

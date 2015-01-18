@@ -7,6 +7,12 @@
   <table id="table" class="center">
     <tbody>
       <tr>
+        <td></td>
+        <td>
+            <a class="waves-effect waves-light btn" id="refreshbtn">Refresh<i class="mdi-action-cached right"></i></a>
+        </td>
+      </tr>
+      <tr>
         <td>
           <div id="left" class="">
   // this is the left editor
@@ -21,7 +27,48 @@ switch(a) {
 var b = a + 2;
           </div>
         </td>
-        <td>
+        <td id="preloader_td">
+          <div class="preloader-wrapper big active" id="preloader">
+            <div class="spinner-layer spinner-blue">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+
+            <div class="spinner-layer spinner-yellow">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+
+            <div class="spinner-layer spinner-green">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
           <div id="right">
   // this is the right editor
   // long commentttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt

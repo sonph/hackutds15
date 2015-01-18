@@ -40,8 +40,17 @@
   padding: 0;
 }
 
-#table td {
+#table tr:last-child td {
   margin: 0;
   padding: 0;
-  border: 1px solid gray;
+  border: 1px dotted gray;
+}
+
+#table tr:last-child td:last-child {
+  width: 500px;
+  height: 500px;
+}
+
+#refreshbtn {
+  margin-bottom: 0;
 }

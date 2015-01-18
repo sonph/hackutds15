@@ -1,4 +1,4 @@
-# basic algebra
+// basic algebra
 var a = 2;
 var b = 4;
 var c = a * b;
@@ -6,17 +6,38 @@ c = a + b;
 c ++;
 c -= ((a % b) * a / b) + 12;
 
-# find sum of a list
+---------------------------------------
+
+// find sum of a list
 var l = [22, 3, 5, 10, 12];
 var s = 0;
-for (x in l) {
-	s += x;
-}
-s = 0;
 for (var index = 0; index < l.length; index++) {
 	s = s + l[index];
 }
+s = 0;
 
-# function call
+index = -1;
+do {
+	index ++;
+	s += l[index];
+} while (index < l.length);
+
+s = 0;
+index = 0;
+do {
+	s += l[index];
+	index ++;	
+} while (index < l.length);
+
+---------------------------------------
+
+// function call
 var l = 'hello world';
 l.slice(2, 6);
+
+---------------------------------------
+
+// list methods
+var fruits = ["Banana", "Orange", "Apple", "Mango", "Pine Apple"];
+fruits.shift();
+fruits.sort();

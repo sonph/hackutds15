@@ -69,13 +69,13 @@ var preprocess = function(editor) {
 		if (line.indexOf('for') > -1) {
 			var iter = null;
 			if (line.indexOf('in') > -1) {
-				iter = line.substring(line.indexOf('(') + 1, line.indexOf(')')).split(' ')[0].trim();
+				iter = line.substring(line.indexOf('(') + 1, line.indexOf(')')).split('in')[0].replace('var', '').trim();
 			} else {
 				iter = line.substring(line.indexOf('(') + 1, line.indexOf(')')).split(';')[0].split('=')[0].replace('var', '').trim();
 			}
 
 			if (iter != null && iter.length > 0) {
-				line += 'arr.push({line: ' + (index +  1) + ', name: "' + iter + '", value: eval(' + iter + ')});';
+				line += 'arr.push({line: ' + (index +  1) + ', name: "' + iter + '", value: eval("' + iter + '").toString()});';
 			}
 			new_doc += line + '\n';
 			continue;
@@ -144,7 +144,7 @@ var preprocess = function(editor) {
 		// insert log
 		console.log('vars = [' + vars + ']');
 		for (var i = 0; i < vars.length; i++) {
-			line += '; arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: eval(' + vars[i] + ').toString()});';
+			line += '; arr.push({line: ' + (index + 1) + ', name: "' + vars[i] + '", value: eval("' + vars[i] + '").toString()});';
 		}
 		new_doc += line + '\n';
 	}

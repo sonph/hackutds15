@@ -8,21 +8,26 @@
     <tbody>
       <tr>
         <td>
-          <p>
-            <input name="group1" type="radio" id="fancy" />
-            <label for="fancy">Fancy (Animation)</label>
-          </p>
-          <p>
-            <input name="group1" type="radio" id="fast" checked="checked"/>
-            <label for="fast">Fast</label>
-          </p>
-        </td>
-        <td>
-            <a class="waves-effect waves-light btn left" id="refreshbtn">Refresh<i class="mdi-action-cached right"></i></a>
+          <div class="left" >
+            <p>
+              <input name="group1" type="radio" id="fancy" />
+              <label for="fancy">Fancy (Animation)</label>
+            </p>
+            <p>
+              <input name="group1" type="radio" id="fast" checked="checked"/>
+              <label for="fast">Fast</label>
+            </p>
+          </div>
+          <div id="autorefresh-div" class="right">
             <p class="right" id="autorefresh-p">
               <input type="checkbox" id="autorefresh" checked="checked" />
               <label for="autorefresh">Auto-Refresh</label>
             </p>
+          </div>
+        </td>
+        <td>
+            <a class="waves-effect waves-light btn left" id="refreshbtn">Refresh<i class="mdi-action-cached right"></i></a>
+            <a class="waves-effect waves-light btn right" id="savebtn">Save</a>
         </td>
       </tr>
       <tr>

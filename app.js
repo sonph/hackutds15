@@ -109,6 +109,46 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 1000;
     $scope.animationDuration = 300;
+    $scope.domain = 'http://sonpham.me/r/hackutds15/#/';
+
+    // get Parse data
+    Parse.initialize("uY92Wyjl4MhYl4i9wBptpFIDqYSAh4A9wjSRLe29", "4D0HZli6Yw7u4gEdpV1XHpBoWhPWEiQVmzZ23gWV");
+    // var TestObject = Parse.Object.extend("TestObject");
+    // var testObject = new TestObject();
+    // testObject.save({foo: "bar"}).then(function(object) {
+    //   alert("yay! it worked");
+    // });
+
+    var parseSave = function() {
+      console.log('parseSave called');
+      var CodeObject = Parse.Object.extend("CodeObject");
+      var codeObj = new CodeObject();
+      // codeObj.set(code, R.join('\n', editor_left.session.getDocument().getAllLines()));
+      console.log("content", R.join('\n', editor_left.session.getDocument().getAllLines()));
+      codeObj.save({
+        content: R.join('\n', editor_left.session.getDocument().getAllLines())
+      }, 
+      {
+        success: function(obj) {
+          console.log("parse success");
+          // toast('New object created with objectId: ' + obj.id, 3000);
+          window.prompt("Your link:", $scope.domain + obj.id);
+        }, 
+        error: function(obj, error) {
+          console.log("parse error");
+          toast('Failed to save: ' + error.message, 5000);
+        }
+      });
+    };
+
+    var parseLoad = function() {
+      var CodeObject = Parse.Object.extend("CodeObject");
+    };
+
+    $('#savebtn').click(function() {
+      console.log('#savebtn clicked');
+      parseSave();
+    });
 
     // preloader animation
     // $('#right').hide();

@@ -147,6 +147,15 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     $('#refreshbtn').on('click', refresh);
     editor_left.on('change', refresh);
 
+    $('#autorefresh').click(function() {
+      if ($(this).is(':checked')) {
+        // $scope.autorefresh = true;
+        editor_left.on('change', refresh);
+      } else {
+        // $scope.autorefresh = false;
+        editor_left.removeListener('change', refresh);
+      }
+    });
     refresh(); // first time on page load
   });
 }]);

@@ -109,7 +109,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 1000;
     $scope.animationDuration = 300;
-    $scope.domain = 'http://sonpham.me/r/hackutds15/#/';
+    $scope.domain = 'http://sonpham.me/hackutds15/#/';
 
     // get Parse data
     Parse.initialize("uY92Wyjl4MhYl4i9wBptpFIDqYSAh4A9wjSRLe29", "4D0HZli6Yw7u4gEdpV1XHpBoWhPWEiQVmzZ23gWV");

@@ -57,7 +57,7 @@
 
 #autorefresh-p {
   margin-bottom: 0;
-  gposition: relative;
+  position: relative;
   top: 50%;
   transform: translateY(-50%);
 }

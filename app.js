@@ -12,7 +12,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     controller: 'AboutCtrl'
   })
   .otherwise({
-    redirectTo: '/'
+    templateUrl: 'home.html',
+    controller: 'HomeCtrl'
   });
   // $locationProvider.html5Mode(true);
 }]);
@@ -38,7 +39,7 @@ app.run(function($rootScope) {
   });
 });
 
-app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+app.controller('HomeCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
   $rootScope.root = {
     title: 'Home'
   };
@@ -109,6 +110,96 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
     $scope.firstTime = true; // first time on page load?
     $scope.refreshInterval = 1000;
     $scope.animationDuration = 300;
+    $scope.domain = 'http://localhost:8000/#/';
+    $scope.defaultContent = '//hello \
+    ';
+
+    // get Parse data
+    Parse.initialize("uY92Wyjl4MhYl4i9wBptpFIDqYSAh4A9wjSRLe29", "4D0HZli6Yw7u4gEdpV1XHpBoWhPWEiQVmzZ23gWV");
+    // var TestObject = Parse.Object.extend("TestObject");
+    // var testObject = new TestObject();
+    // testObject.save({foo: "bar"}).then(function(object) {
+    //   alert("yay! it worked");
+    // });
+
+    var parseSave = function() {
+      console.log('parseSave called');
+      var CodeObject = Parse.Object.extend("CodeObject");
+      var codeObj = new CodeObject();
+      // codeObj.set(code, R.join('\n', editor_left.session.getDocument().getAllLines()));
+      console.log("content", R.join('\n', editor_left.session.getDocument().getAllLines()));
+      codeObj.save({
+        content: R.join('\n', editor_left.session.getDocument().getAllLines())
+      }, 
+      {
+        success: function(obj) {
+          console.log("parse success");
+          // toast('New object created with objectId: ' + obj.id, 3000);
+          window.prompt("Your link:", $scope.domain + obj.id);
+        }, 
+        error: function(obj, error) {
+          console.log("parse error");
+          toast('Failed to save: ' + error.message, 5000);
+        }
+      });
+    };
+
+    var parseLoad = function(id) {
+      console.log("LOADDING", id);
+      var CodeObject = Parse.Object.extend("CodeObject");
+      var query = new Parse.Query(CodeObject);
+      query.get(id, {
+        success: function(obj) {
+          toast('Loaded');
+          console.log('LOADED CONTENT', obj.attributes.content);
+          editor_left.setValue(obj.attributes.content);
+        },
+        error: function(obj, error) {
+          toast('Failed to load: ' + error.message, 5000); 
+          editor_left.setValue($scope.defaultContent);
+        }
+      });
+    };
+
+    $('#savebtn').click(function() {
+      console.log('#savebtn clicked');
+      parseSave();
+    });
+
+    var load = function(id) {
+      $scope.running = true;
+      $('#refreshbtn').addClass('disabled');
+      $('#right').fadeOut('fast');
+      $('#right').hide();
+      $('#preloader_td').addClass("center");
+      $('#preloader').fadeIn('fast');
+
+      // call function
+      setTimeout(function() {
+        parseLoad(id);
+        $('#preloader').fadeOut('fast');
+        $('#preloader').hide();
+        $('#preloader_td').removeClass("center");
+        $('#right').fadeIn('fast');
+        $('#refreshbtn').removeClass('disabled');
+        $scope.running = false;
+      }, $scope.animationDuration);
+    };
+
+    console.log("PATH:", $location.path());
+    var path = $location.path().trim();
+    if (path != '/') {
+      if (path.charAt(0) == '/') {
+        $scope.contentid = path.substr(1);
+      } else {
+        $scope.contentid = path;
+      }
+      load($scope.contentid);
+    } else {
+      editor_left.setValue($scope.defaultContent);
+      editor_left.selection.clearSelection();
+      editor_left.gotoLine(0, 0, false);
+    }
 
     // preloader animation
     // $('#right').hide();
@@ -167,7 +258,7 @@ app.controller('HomeCtrl', ['$scope', '$rootScope', function($scope, $rootScope)
       var id = $(this).prop('id');
       console.log(id);
       if (id == 'fancy') {
-        $scope.animationDuration = 1500;
+        $scope.animationDuration = 50000;
       } else {
         $scope.animationDuration = 0;
       }

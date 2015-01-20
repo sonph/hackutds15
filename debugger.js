@@ -43,7 +43,7 @@ var preprocess = function(editor) {
 
 		// return statement -- eval return value and push to arr
 		if (line.indexOf('return') > -1) {
-			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: JSON.stringify(eval(' + line.replace('return', '').split(';')[0].trim() +'"))});';
+			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: JSON.stringify(eval("' + line.replace('return', '').split(';')[0].trim() +'"))});';
 			if (line.indexOf('++') > -1) {
 				tmp += line.replace('return', '').split(';')[0].trim().replace('++', '').trim() + '--;';
 			}

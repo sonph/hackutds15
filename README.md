@@ -8,7 +8,7 @@ No one likes debugging and writing log messages, so we hacked together this weba
 
 No more littering your source code with log messages and see how all the variables change to what values and at what points as the program runs, in a timeline from top to bottom!
 
-This was partly inspired by [Bret Victor's _Inventing on Principle_ talk](https://www.youtube.com/watch?v=PUv66718DII), but his original editor isn't published AFAIK.
+This was partly inspired by [Bret Victor's _Inventing on Principle_ talk](https://www.youtube.com/watch?v=PUv66718DII), but his original editor isn't published AFAIK, so we decided to roll our own.
 
 # Features
 * Realtime inline debugging. Change one character and see how the rest of the program flow changes!
@@ -17,7 +17,13 @@ This was partly inspired by [Bret Victor's _Inventing on Principle_ talk](https:
 * Web-based cross-platform
 
 # How
-Fundamentally, it's JavaScript's `eval()` (it's not as easy as you think, so we had to do lots of clever tweaks and hacks).
+
+We
+
+* take and examine the user's source code
+* inject our own code into it
+* evalutate the whole thing to get it to log out information during the program's execution
+* reformat the information on to the right pane.
 
 # The Technologies
 * pure JavaScript for source code preprocessing, evaluating and parsing

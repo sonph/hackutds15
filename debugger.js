@@ -43,14 +43,9 @@ var preprocess = function(editor) {
 
 		// return statement -- eval return value and push to arr
 		if (line.indexOf('return') > -1) {
-			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: JSON.stringify(eval("' + line.replace('return', '').split(';')[0].trim() +'"))});';
-			if (line.indexOf('++') > -1) {
-				tmp += line.replace('return', '').split(';')[0].trim().replace('++', '').trim() + '--;';
-			}
-			if (line.indexOf('--') > -1) {
-				tmp += line.replace('return', '').split(';')[0].trim().replace('--', '').trim() + '++;';
-			}
-			new_doc += tmp + line + '\n';
+			var toReturn = 'var temporary_variable_that_no_one_will_name = ' + line.replace('return', '');
+			var tmp = 'arr.push({line: ' + (index + 1) + ', name: "return", value: JSON.stringify(eval("temporary_variable_that_no_one_will_name"))});\nreturn temporary_variable_that_no_one_will_name';
+			new_doc += (toReturn + '\n' + tmp + '\n');
 			continue;
 		}
 

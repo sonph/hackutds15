@@ -154,62 +154,6 @@ fruits.sort();\n\
 \n\
     ';
 
-    // get Parse data
-    Parse.initialize("uY92Wyjl4MhYl4i9wBptpFIDqYSAh4A9wjSRLe29", "4D0HZli6Yw7u4gEdpV1XHpBoWhPWEiQVmzZ23gWV");
-    // var TestObject = Parse.Object.extend("TestObject");
-    // var testObject = new TestObject();
-    // testObject.save({foo: "bar"}).then(function(object) {
-    //   alert("yay! it worked");
-    // });
-
-    var parseSave = function() {
-      console.log('parseSave called');
-      var CodeObject = Parse.Object.extend("CodeObject");
-      var codeObj = new CodeObject();
-      // codeObj.set(code, R.join('\n', editor_left.session.getDocument().getAllLines()));
-      console.log("content", R.join('\n', editor_left.session.getDocument().getAllLines()));
-      codeObj.save({
-        content: R.join('\n', editor_left.session.getDocument().getAllLines())
-      }, 
-      {
-        success: function(obj) {
-          console.log("parse success");
-          // toast('New object created with objectId: ' + obj.id, 3000);
-          window.prompt("Your link:", $scope.domain + obj.id);
-        }, 
-        error: function(obj, error) {
-          console.log("parse error");
-          toast('Failed to save: ' + error.message, 5000);
-        }
-      });
-    };
-
-    var parseLoad = function(id) {
-      console.log("LOADDING", id);
-      var CodeObject = Parse.Object.extend("CodeObject");
-      var query = new Parse.Query(CodeObject);
-      query.get(id, {
-        success: function(obj) {
-          toast('Loaded');
-          console.log('LOADED CONTENT', obj.attributes.content);
-          editor_left.setValue(obj.attributes.content);
-          editor_left.selection.clearSelection();
-          editor_left.gotoLine(0, 0, false);
-        },
-        error: function(obj, error) {
-          toast('Failed to load: ' + error.message, 5000); 
-          editor_left.setValue($scope.defaultContent);
-          editor_left.selection.clearSelection();
-          editor_left.gotoLine(0, 0, false);
-        }
-      });
-    };
-
-    $('#savebtn').click(function() {
-      console.log('#savebtn clicked');
-      parseSave();
-    });
-
     var load = function(id) {
       $scope.running = true;
       $('#refreshbtn').addClass('disabled');
@@ -220,7 +164,6 @@ fruits.sort();\n\
 
       // call function
       setTimeout(function() {
-        parseLoad(id);
         $('#preloader').fadeOut('fast');
         $('#preloader').hide();
         $('#preloader_td').removeClass("center");
